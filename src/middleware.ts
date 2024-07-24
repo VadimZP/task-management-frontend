@@ -1,22 +1,37 @@
-import axios from 'axios';
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import axios from "axios";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-    const test = request.cookies.get('connect.sid')
-    const cookieResponse = await axios.get("http://localhost:8000/session", {
-        headers: {
-            "Cookie": `${test?.name}=${test?.value};`
-        }
-    })
+  const path = request.nextUrl.pathname;
 
-    console.log("sdsadasasddasdsadsadsadssaddsasasaddsas", cookieResponse.data)
+  const sessionCookie = request.cookies.get("connect.sid");
 
-    // return NextResponse.redirect(new URL('/home', request.url))
+  const response = await axios.get("http://localhost:8000/session", {
+    headers: {
+      Cookie: `${sessionCookie?.name}=${sessionCookie?.value};`,
+    },
+  });
+
+  const { isAuthenticated } = response.data;
+
+  if (!isAuthenticated && path !== "/sign-in") {
+    return NextResponse.redirect(new URL("/sign-in", request.url));
+  }
+
+  return NextResponse.next();
 }
 
-// See "Matching Paths" below to learn more
-// export const config = {
-//   matcher: '/about/:path*',
-// }
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+  ],
+};
