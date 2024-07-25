@@ -2,7 +2,6 @@ import axios from "axios";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
@@ -15,6 +14,18 @@ export async function middleware(request: NextRequest) {
   });
 
   const { isAuthenticated } = response.data;
+
+  if (isAuthenticated && path === "/sign-in") {
+    return NextResponse.redirect(new URL("/home", request.url));
+  }
+
+  if (isAuthenticated && path === "/sign-up") {
+    return NextResponse.redirect(new URL("/home", request.url));
+  }
+
+  if (!isAuthenticated && path === "/sign-up") {
+    return NextResponse.redirect(new URL("/sign-up", request.url));
+  }
 
   if (!isAuthenticated && path !== "/sign-in") {
     return NextResponse.redirect(new URL("/sign-in", request.url));

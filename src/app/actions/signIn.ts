@@ -53,9 +53,17 @@ export const signIn = async (
       body: JSON.stringify(fields),
     });
 
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+    if (!response.ok && response.status === 401) {
+      throw new Error(`Incorrect credentials`);
     }
+
+    if (!response.ok) {
+      throw new Error("Server error. Try again or come back later");
+    }
+
+    const {
+      data: { id, email, nickname },
+    } = await response.json();
 
     const cookiesList = response.headers.get("Set-Cookie");
 
@@ -63,12 +71,11 @@ export const signIn = async (
       throw new Error("Something went wrong with cookies");
     }
 
-    const cookieSessionName = "1connect.sid";
+    const cookieSessionName = "connect.sid";
     const cookieSessionValue = cookie.parse(cookiesList)[cookieSessionName];
-    console.log("🚀 ~ cookieSessionValue:", cookieSessionValue);
 
     if (!cookieSessionValue) {
-      throw new Error("Something went wrong with session");
+      throw new Error("Server error: something went wrong with session");
     }
 
     const cookieSessionPath = cookie.parse(cookiesList).Path;
@@ -78,6 +85,18 @@ export const signIn = async (
       name: cookieSessionName,
       value: cookieSessionValue,
       path: cookieSessionPath,
+      expires: new Date(cookieSessionExpiration),
+    });
+
+    cookies().set("id", id, {
+      expires: new Date(cookieSessionExpiration),
+    });
+
+    cookies().set("email", email, {
+      expires: new Date(cookieSessionExpiration),
+    });
+
+    cookies().set("nickname", nickname, {
       expires: new Date(cookieSessionExpiration),
     });
   } catch (error) {
