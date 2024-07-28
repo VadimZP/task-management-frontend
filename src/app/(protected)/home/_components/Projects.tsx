@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
-import { ProjectsList } from "./_components/ProjectsList/ProjectsList";
-import { Project } from "./_components/types";
+import { ProjectsList } from "./ProjectsList";
+import { Project } from "./types";
 
 async function getOwnProjects() {
   const sessionId = cookies().get("connect.sid");
@@ -18,16 +18,16 @@ async function getOwnProjects() {
   return res.json() as Promise<{ data: Project[] }>;
 }
 
-export default async function HomePage() {
+export async function Projects() {
   const ownProjects = await getOwnProjects();
 
   return (
-    <div className="p-8">
+    <>
       {!!ownProjects.data.length ? (
         <ProjectsList list={ownProjects.data} />
       ) : (
         <p>You have no projects</p>
       )}
-    </div>
+    </>
   );
 }

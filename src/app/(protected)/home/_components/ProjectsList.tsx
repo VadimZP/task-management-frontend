@@ -1,5 +1,5 @@
-import { ProjectCard } from "../ProjectCard/ProjectCard";
-import { Project } from "../types";
+import { ProjectCard } from "./ProjectCard";
+import { Project } from "./types";
 
 interface ProjectsListProps {
   list: Project[];
@@ -15,6 +15,7 @@ export function ProjectsList({ list }: ProjectsListProps) {
             id={item.id}
             title={item.title}
             description={item?.description}
+            slug={item.slug}
           />
         );
       })}
