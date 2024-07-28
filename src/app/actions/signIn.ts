@@ -54,11 +54,11 @@ export const signIn = async (
     });
 
     if (!response.ok && response.status === 401) {
-      throw new Error(`Incorrect credentials`);
+      throw new Error("Incorrect credentials");
     }
 
     if (!response.ok) {
-      throw new Error("Server error. Try again or come back later");
+      throw new Error("Something went wrong during authentication");
     }
 
     const {
@@ -75,7 +75,7 @@ export const signIn = async (
     const cookieSessionValue = cookie.parse(cookiesList)[cookieSessionName];
 
     if (!cookieSessionValue) {
-      throw new Error("Server error: something went wrong with session");
+      throw new Error("Something went wrong with session");
     }
 
     const cookieSessionPath = cookie.parse(cookiesList).Path;

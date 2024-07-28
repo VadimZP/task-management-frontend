@@ -16,12 +16,12 @@ export default function SignInPage() {
   const isError = state.errorMessage ?? JSON.stringify(state.errors);
 
   return (
-    <div className="bg-slate-50 h-full flex">
+    <div className="flex h-full bg-slate-50">
       <form
         action={formAction}
-        className="m-auto flex flex-col max-w-[400px] w-[400px] rounded-md bg-white shadow-sm p-4 border-blue-100 border"
+        className="m-auto flex w-[400px] max-w-[400px] flex-col rounded-md border border-blue-100 bg-white p-4 shadow-sm"
       >
-        <div className="gap-y-6 flex flex-col">
+        <div className="flex flex-col gap-y-6">
           <Input label="Email" name="email" type="email" id="email" required />
           <Input
             label="Password"
@@ -34,7 +34,7 @@ export default function SignInPage() {
         <Spacing />
 
         <div
-          className="bg-red-100 text-red-700 p-1 px-2 rounded-md text-sm spacing tracking-tight"
+          className="spacing rounded-md bg-red-100 p-1 px-2 text-sm tracking-tight text-red-700"
           style={isError ? { visibility: "visible" } : { visibility: "hidden" }}
           role="alert"
         >

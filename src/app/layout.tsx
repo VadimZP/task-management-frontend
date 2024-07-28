@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 
-const plex = IBM_Plex_Mono({
+const plex = Nunito({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
 });

@@ -9,7 +9,7 @@ interface Input {
 export function Input({ label, name, id, type, required }: Input) {
   return (
     <div className="flex flex-col">
-      <label htmlFor={id} className="mb-3 ml-1 text-blue-950 text-sm">
+      <label htmlFor={id} className="mb-3 ml-1 font-bold text-primary">
         {label}
       </label>
       <input
@@ -17,7 +17,7 @@ export function Input({ label, name, id, type, required }: Input) {
         id={id}
         {...(type ? { type } : {})}
         {...(required ? { required } : {})}
-        className="border rounded-md border-slate-300 outline-none p-2 bg-slate-50 text-blue-950 focus:border-blue-700 text-sm"
+        className="rounded-md border border-slate-300 bg-slate-50 p-2 text-sm text-primary outline-none focus:border-blue-700"
       />
     </div>
   );

@@ -13,7 +13,7 @@ export function SubmitButton({ title }: SubmitButton) {
     <button
       type="submit"
       aria-disabled={pending}
-      className="rounded-md  border bg-blue-700 font-bold w-fit m-auto p-2 px-4 hover:bg-blue-800 text-md text-white transition-all shadow"
+      className="text-md m-auto w-fit rounded-md border bg-blue-700 p-2 px-4 font-bold text-white shadow transition-all hover:bg-blue-800"
     >
       {title}
     </button>
