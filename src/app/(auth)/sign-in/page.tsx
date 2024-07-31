@@ -3,9 +3,8 @@
 import { useFormState } from "react-dom";
 
 import { signIn } from "@/app/actions/signIn";
+import { Input, Spacing } from "@/app/global-components";
 import { SubmitButton } from "../_components/SubmitButton";
-import { Input } from "@/app/global-components/Input/Input";
-import { Spacing } from "@/app/global-components/Input/Spacing";
 
 export default function SignInPage() {
   const [state, formAction] = useFormState(signIn, {
